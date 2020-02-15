@@ -39,7 +39,11 @@ class ServiceRequestsController extends Controller {
    * @return redirect
    */
   public function delete($id){
-    ServiceRequests::findOrFail($id)->delete();
+    $serviceRequest = ServiceRequests::findOrFail($id);
+    if(isset($serviceRequest)) {
+      $serviceRequest->is_deleted = 1;
+      $serviceRequest->save();
+    }
     return redirect('/');
   }
 
